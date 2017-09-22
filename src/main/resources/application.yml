@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  contextPath: /rest-publication
+  basePath: http://localhost
+  error:
+      path: /error
+      whitelabel:
+          enabled: false
+  ssl:
+    enabled: false
+    key-store: classpath:main.jks
+    key-password: secret
+---
+spring:
+  profiles: local, default
+  resources:
+    #staticLocations: classpath:/static/
+    #cachePeriod: 0
+  application:
+      name: REST API publication
+      thymeleaf:
+          cache: false
+          enabled: true
+          prefix: classpath:/templates/
+          suffix: .html
+          checkTemplateLocation: true
+          mode: LEGACYHTML5
+          encoding: UTF-8
+          contentType: text/html
+  main:
+      banner-mode: "console"
