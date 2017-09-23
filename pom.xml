@@ -75,13 +75,21 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-mongodb</artifactId>
-            <version>1.10.7.RELEASE</version>
+            <version>${springframework.mongo.version}</version>
         </dependency>
+        
         <!-- DTO -->
         <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>${modelmapper.version}</version>
+        </dependency>
+        <!-- Common -->
+        <dependency>
+            <groupId>com.wildbeeslabs.api.rest</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0.0-RELEASE</version>
+            <!--<type>jar</type>-->
         </dependency>
     </dependencies>
 

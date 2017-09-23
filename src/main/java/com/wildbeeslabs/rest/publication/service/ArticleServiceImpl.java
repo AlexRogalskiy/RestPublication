@@ -26,6 +26,9 @@ package com.wildbeeslabs.rest.publication.service;
 import com.wildbeeslabs.rest.publication.model.Article;
 import com.wildbeeslabs.rest.publication.repository.ArticleRepository;
 import com.wildbeeslabs.rest.publication.service.interfaces.IArticleService;
+
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +43,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service("articleService")
 @Transactional
-public class ArticleServiceImpl<T extends Article> extends MongoBaseServiceImpl<T, ArticleRepository<T>> implements IArticleService<T> {
+public class ArticleServiceImpl<T extends Article> extends MongoBaseServiceImpl<T, String, ArticleRepository<T>> implements IArticleService<T> {
 
+    @Override
+    public T findByNameIgnoreCase(String name) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<? extends T> findByCategory(String category) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

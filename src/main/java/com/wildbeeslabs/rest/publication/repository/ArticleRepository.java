@@ -23,6 +23,7 @@
  */
 package com.wildbeeslabs.rest.publication.repository;
 
+import com.wildbeeslabs.api.rest.common.repository.BaseRepository;
 import com.wildbeeslabs.rest.publication.model.Article;
 import java.util.List;
 import org.springframework.stereotype.Repository;
@@ -37,7 +38,7 @@ import org.springframework.stereotype.Repository;
  * @param <T>
  */
 @Repository
-public interface ArticleRepository<T extends Article> extends MongoBaseRepository<T> {
+public interface ArticleRepository<T extends Article> extends MongoBaseRepository<T, String>, BaseRepository<T> {
 
     /**
      * Get article entity by name (case insensitive)
@@ -53,5 +54,5 @@ public interface ArticleRepository<T extends Article> extends MongoBaseRepositor
      * @param category - article category
      * @return list of article entities
      */
-    List<T> findByCategory(final String category);
+    List<? extends T> findByCategory(final String category);
 }

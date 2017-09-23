@@ -24,9 +24,9 @@
 package com.wildbeeslabs.rest.publication.service.interfaces;
 
 import com.wildbeeslabs.rest.publication.model.Article;
-import java.util.List;
-import com.wildbeeslabs.api.rest.common.service.interfaces.IJpaBaseService;
 import com.wildbeeslabs.api.rest.common.service.interfaces.IMongoBaseService;
+
+import java.util.List;
 
 /**
  *
@@ -37,7 +37,7 @@ import com.wildbeeslabs.api.rest.common.service.interfaces.IMongoBaseService;
  * @since 2017-08-08
  * @param <T>
  */
-public interface IArticleService<T extends Article> extends IMongoBaseService<T> {
+public interface IArticleService<T extends Article> extends IMongoBaseService<T, String> {
 
     /**
      * Get article entity by name (case insensitive)
@@ -53,5 +53,5 @@ public interface IArticleService<T extends Article> extends IMongoBaseService<T>
      * @param category - article category
      * @return list of article entities
      */
-    List<T> findByCategory(final String category);
+    List<? extends T> findByCategory(final String category);
 }

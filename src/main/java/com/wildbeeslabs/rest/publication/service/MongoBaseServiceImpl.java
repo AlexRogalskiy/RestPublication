@@ -27,6 +27,14 @@ import com.wildbeeslabs.api.rest.common.model.IBaseEntity;
 import com.wildbeeslabs.api.rest.common.service.interfaces.IMongoBaseService;
 import com.wildbeeslabs.rest.publication.repository.MongoBaseRepository;
 
+import java.io.Serializable;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
+
 /**
  *
  * Mongo Base REST Application Service implementation
@@ -35,12 +43,44 @@ import com.wildbeeslabs.rest.publication.repository.MongoBaseRepository;
  * @version 1.0.0
  * @since 2017-08-08
  * @param <T>
+ * @param <ID>
  * @param <R>
  */
-public class MongoBaseServiceImpl<T extends IBaseEntity, R extends MongoBaseRepository<T>> implements IMongoBaseService<T> {
+@Transactional
+public abstract class MongoBaseServiceImpl<T extends IBaseEntity, ID extends Serializable, R extends MongoBaseRepository<T, ID>> implements IMongoBaseService<T, ID> {
 
     @Autowired
     private R repository;
+
+    @Override
+    public List<? extends T> findAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<? extends T> findAll(Sort sort) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public T insert(T item) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<? extends T> insert(Iterable<? extends T> iterables) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<? extends T> findAll(Example<? extends T> example) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<? extends T> findAll(Example<? extends T> example, Sort sort) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     protected R getRepository() {
         return repository;
