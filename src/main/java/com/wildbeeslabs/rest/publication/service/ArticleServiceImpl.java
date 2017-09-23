@@ -21,37 +21,25 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.rest.publication.repository;
+package com.wildbeeslabs.rest.publication.service;
 
 import com.wildbeeslabs.rest.publication.model.Article;
-import java.util.List;
-import org.springframework.stereotype.Repository;
+import com.wildbeeslabs.rest.publication.repository.ArticleRepository;
+import com.wildbeeslabs.rest.publication.service.interfaces.IArticleService;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * Article REST Application storage repository
+ * Article REST Application Service implementation
  *
  * @author Alex
  * @version 1.0.0
  * @since 2017-08-08
  * @param <T>
  */
-@Repository
-public interface ArticleRepository<T extends Article> extends MongoBaseRepository<T> {
+@Service("articleService")
+@Transactional
+public class ArticleServiceImpl<T extends Article> extends MongoBaseServiceImpl<T, ArticleRepository<T>> implements IArticleService<T> {
 
-    /**
-     * Get article entity by name (case insensitive)
-     *
-     * @param name - article name
-     * @return article entity
-     */
-    T findByNameIgnoreCase(final String name);
-
-    /**
-     * Get list of article entities by category
-     *
-     * @param category - article category
-     * @return list of article entities
-     */
-    List<T> findByCategory(final String category);
 }

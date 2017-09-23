@@ -21,47 +21,42 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.rest.publication.model;
+package com.wildbeeslabs.rest.publication.model.dto;
 
-import com.wildbeeslabs.api.rest.common.model.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import com.wildbeeslabs.api.rest.common.model.dto.BaseDTO;
 
-import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  *
- * Article REST Application Model
+ * ArticleDTO REST Application Model
  *
  * @author Alex
  * @version 1.0.0
  * @since 2017-08-08
  */
-@Entity(name = "Article")
-@Table(name = "articles", uniqueConstraints = {
-    @UniqueConstraint(columnNames = "login", name = "login_unique_constraint")
-})
 @Inheritance(strategy = InheritanceType.JOINED)
-@Document(collection="article")
-public class Article extends BaseEntity<Long> implements Serializable {
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "userOrders"})
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JacksonXmlRootElement(localName = "article")
+public class ArticleDTO extends BaseDTO<Long> {
 
-    @Id
+    @JacksonXmlProperty(localName = "id")
     private Long id;
+    @JacksonXmlProperty(localName = "name")
     private String name;
+    @JacksonXmlProperty(localName = "category")
     private String category;
 
-    @Override
     public Long getId() {
         return id;
     }
 
-    @Override
     public void setId(final Long id) {
         this.id = id;
     }
@@ -83,11 +78,6 @@ public class Article extends BaseEntity<Long> implements Serializable {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(this.id, this.name, this.category);
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -95,14 +85,19 @@ public class Article extends BaseEntity<Long> implements Serializable {
         if (null == obj || obj.getClass() != this.getClass()) {
             return false;
         }
-        final Article other = (Article) obj;
+        final ArticleDTO other = (ArticleDTO) obj;
         return Objects.equals(this.name, other.name)
                 && Objects.equals(this.category, other.category)
                 && Objects.equals(this.id, other.id);
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(this.id, this.name, this.category);
+    }
+
+    @Override
     public String toString() {
-        return String.format("Article {id: %d, name: %s, category: %s, inherited: %s}", this.id, this.name, this.category, super.toString());
+        return String.format("ArticleDTO {id: %d, name: %s, category: %s, inherited: %s}", this.id, this.name, this.category, super.toString());
     }
 }

@@ -21,37 +21,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.rest.publication.repository;
+package com.wildbeeslabs.rest.publication.service;
 
-import com.wildbeeslabs.rest.publication.model.Article;
-import java.util.List;
-import org.springframework.stereotype.Repository;
+import com.wildbeeslabs.api.rest.common.model.IBaseEntity;
+import com.wildbeeslabs.api.rest.common.service.interfaces.IMongoBaseService;
+import com.wildbeeslabs.rest.publication.repository.MongoBaseRepository;
 
 /**
  *
- * Article REST Application storage repository
+ * Mongo Base REST Application Service implementation
  *
  * @author Alex
  * @version 1.0.0
  * @since 2017-08-08
  * @param <T>
+ * @param <R>
  */
-@Repository
-public interface ArticleRepository<T extends Article> extends MongoBaseRepository<T> {
+public class MongoBaseServiceImpl<T extends IBaseEntity, R extends MongoBaseRepository<T>> implements IMongoBaseService<T> {
 
-    /**
-     * Get article entity by name (case insensitive)
-     *
-     * @param name - article name
-     * @return article entity
-     */
-    T findByNameIgnoreCase(final String name);
+    @Autowired
+    private R repository;
 
-    /**
-     * Get list of article entities by category
-     *
-     * @param category - article category
-     * @return list of article entities
-     */
-    List<T> findByCategory(final String category);
+    protected R getRepository() {
+        return repository;
+    }
 }

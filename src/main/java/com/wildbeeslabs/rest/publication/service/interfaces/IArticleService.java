@@ -21,21 +21,37 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.rest.publication.model;
+package com.wildbeeslabs.rest.publication.service.interfaces;
 
-import java.io.Serializable;
+import com.wildbeeslabs.rest.publication.model.Article;
+import java.util.List;
+import com.wildbeeslabs.api.rest.common.service.interfaces.IJpaBaseService;
+import com.wildbeeslabs.api.rest.common.service.interfaces.IMongoBaseService;
 
 /**
  *
- * BaseEntity REST interface declaration
+ * Article REST Application Service declaration
  *
  * @author Alex
  * @version 1.0.0
  * @since 2017-08-08
+ * @param <T>
  */
-public interface IBaseEntity extends Serializable {
+public interface IArticleService<T extends Article> extends IMongoBaseService<T> {
 
-    default Long getId() {
-        return null;
-    }
+    /**
+     * Get article entity by name (case insensitive)
+     *
+     * @param name - article name
+     * @return article entity
+     */
+    T findByNameIgnoreCase(final String name);
+
+    /**
+     * Get list of article entities by category
+     *
+     * @param category - article category
+     * @return list of article entities
+     */
+    List<T> findByCategory(final String category);
 }

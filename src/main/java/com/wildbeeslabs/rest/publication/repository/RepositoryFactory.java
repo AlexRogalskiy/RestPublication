@@ -23,35 +23,30 @@
  */
 package com.wildbeeslabs.rest.publication.repository;
 
-import com.wildbeeslabs.rest.publication.model.Article;
-import java.util.List;
-import org.springframework.stereotype.Repository;
+import com.mongodb.MongoClient;
+import java.net.UnknownHostException;
+
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.repository.support.MongoRepositoryFactory;
+import org.springframework.data.repository.core.support.RepositoryFactorySupport;
 
 /**
  *
- * Article REST Application storage repository
+ * RepositoryFactory Application REST implementation
  *
  * @author Alex
  * @version 1.0.0
  * @since 2017-08-08
- * @param <T>
  */
-@Repository
-public interface ArticleRepository<T extends Article> extends MongoBaseRepository<T> {
+public class RepositoryFactory {
 
-    /**
-     * Get article entity by name (case insensitive)
-     *
-     * @param name - article name
-     * @return article entity
-     */
-    T findByNameIgnoreCase(final String name);
-
-    /**
-     * Get list of article entities by category
-     *
-     * @param category - article category
-     * @return list of article entities
-     */
-    List<T> findByCategory(final String category);
+    public static ArticleRepository createArticleRepository() {
+        MongoClient mongoClient = new MongoClient("localhost", 27017);
+        MongoDbFactory mongoDbFactory = new SimpleMongoDbFactory(mongoClient, "test");
+        MongoTemplate mongoOptions = new MongoTemplate(mongoDbFactory);
+        RepositoryFactorySupport factory = new MongoRepositoryFactory(mongoOptions);
+        return factory.getRepository(ArticleRepository.class, new CustomArticleRepositoryImpl());
+    }
 }
