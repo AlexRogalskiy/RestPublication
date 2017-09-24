@@ -21,46 +21,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.wildbeeslabs.rest.publication.repository;
+package com.wildbeeslabs.rest.publication.model.dto.wrapper;
 
-import com.wildbeeslabs.api.rest.common.repository.BaseRepository;
-import com.wildbeeslabs.rest.publication.model.Article;
+import com.wildbeeslabs.api.rest.common.model.dto.wrapper.BaseDTOListWrapper;
+import com.wildbeeslabs.rest.publication.model.dto.ArticleDTO;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 import java.util.List;
-import org.springframework.stereotype.Repository;
 
 /**
  *
- * Article REST Application storage repository
+ * ArticleDTOListWrapper REST Application Model
  *
  * @author Alex
  * @version 1.0.0
  * @since 2017-08-08
- * @param <T>
+ * @param <E>
  */
-@Repository
-public interface ArticleRepository<T extends Article> extends MongoBaseRepository<T, String>, BaseRepository<T> {
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JacksonXmlRootElement(localName = "articles")
+public class ArticleDTOListWrapper<E extends ArticleDTO> extends BaseDTOListWrapper<E> {
 
-    /**
-     * Get article entity by name (case insensitive)
-     *
-     * @param name - article name
-     * @return article entity
-     */
-    T findByNameIgnoreCase(final String name);
-
-    /**
-     * Get list of article entities by name pattern
-     *
-     * @param name - article name pattern
-     * @return list of article entities
-     */
-    List<? extends T> findByNameLike(final String name);
-
-    /**
-     * Get list of article entities by category
-     *
-     * @param category - article category
-     * @return list of article entities
-     */
-    List<? extends T> findByCategory(final String category);
+    @JsonProperty("articles")
+    @JacksonXmlElementWrapper(useWrapping = false)
+    @JacksonXmlProperty(localName = "article")
+    @SuppressWarnings("FieldNameHidesFieldInSuperclass")
+    protected List<? extends E> items = null;
 }

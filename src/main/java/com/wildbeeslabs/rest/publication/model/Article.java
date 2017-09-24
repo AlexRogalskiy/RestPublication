@@ -48,21 +48,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
     @UniqueConstraint(columnNames = "login", name = "login_unique_constraint")
 })
 @Inheritance(strategy = InheritanceType.JOINED)
-@Document(collection="article")
-public class Article extends BaseEntity<Long> implements Serializable {
+@Document(collection = "article")
+public class Article extends BaseEntity<String> implements Serializable {
 
     @Id
-    private Long id;
+    private String id;
     private String name;
     private String category;
 
     @Override
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
     @Override
-    public void setId(final Long id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -103,6 +103,6 @@ public class Article extends BaseEntity<Long> implements Serializable {
 
     @Override
     public String toString() {
-        return String.format("Article {id: %d, name: %s, category: %s, inherited: %s}", this.id, this.name, this.category, super.toString());
+        return String.format("Article {id: %s, name: %s, category: %s, inherited: %s}", this.id, this.name, this.category, super.toString());
     }
 }

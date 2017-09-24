@@ -24,15 +24,15 @@
 package com.wildbeeslabs.rest.publication.service;
 
 import com.wildbeeslabs.api.rest.common.model.IBaseEntity;
-import com.wildbeeslabs.api.rest.common.service.interfaces.IMongoBaseService;
+import com.wildbeeslabs.api.rest.common.service.interfaces.IBaseService;
 import com.wildbeeslabs.rest.publication.repository.MongoBaseRepository;
 
 import java.io.Serializable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -47,7 +47,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @param <R>
  */
 @Transactional
-public abstract class MongoBaseServiceImpl<T extends IBaseEntity, ID extends Serializable, R extends MongoBaseRepository<T, ID>> implements IMongoBaseService<T, ID> {
+public abstract class MongoBaseServiceImpl<T extends IBaseEntity, ID extends Serializable, R extends MongoBaseRepository<T, ID>> implements IBaseService<T, ID> {
 
     @Autowired
     private R repository;
@@ -58,27 +58,62 @@ public abstract class MongoBaseServiceImpl<T extends IBaseEntity, ID extends Ser
     }
 
     @Override
-    public List<? extends T> findAll(Sort sort) {
+    public T findById(final ID id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public T insert(T item) {
+    public void create(final T item) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<? extends T> insert(Iterable<? extends T> iterables) {
+    public void save(final T item) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<? extends T> findAll(Example<? extends T> example) {
+    public void update(final T item) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<? extends T> findAll(Example<? extends T> example, Sort sort) {
+    public void merge(final T itemTo, final T itemFrom) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteById(final ID id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(final T item) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void delete(final List<? extends T> item) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Page<? extends T> findAll(final Pageable pageable) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void deleteAll() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean isExist(final ID id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean isExist(final T item) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

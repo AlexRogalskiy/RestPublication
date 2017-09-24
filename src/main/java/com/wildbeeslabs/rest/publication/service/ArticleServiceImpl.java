@@ -46,12 +46,23 @@ import org.springframework.transaction.annotation.Transactional;
 public class ArticleServiceImpl<T extends Article> extends MongoBaseServiceImpl<T, String, ArticleRepository<T>> implements IArticleService<T> {
 
     @Override
-    public T findByNameIgnoreCase(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public T findByNameIgnoreCase(final String name) {
+        return getRepository().findByNameIgnoreCase(name);
     }
 
     @Override
-    public List<? extends T> findByCategory(String category) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<? extends T> findByCategory(final String category) {
+        return getRepository().findByCategory(category);
+    }
+
+    @Override
+    public List<? extends T> findByNameLike(final String name) {
+        return getRepository().findByNameLike(name);
+    }
+
+    @Override
+    public List<? extends T> findByCategoryId(final Long categoryId) {
+        //return getRepository().findByCategoryId(categoryId);
+        return null;
     }
 }

@@ -23,8 +23,8 @@
  */
 package com.wildbeeslabs.rest.publication.service.interfaces;
 
+import com.wildbeeslabs.api.rest.common.service.interfaces.IBaseService;
 import com.wildbeeslabs.rest.publication.model.Article;
-import com.wildbeeslabs.api.rest.common.service.interfaces.IMongoBaseService;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ import java.util.List;
  * @since 2017-08-08
  * @param <T>
  */
-public interface IArticleService<T extends Article> extends IMongoBaseService<T, String> {
+public interface IArticleService<T extends Article> extends IBaseService<T, String> {
 
     /**
      * Get article entity by name (case insensitive)
@@ -48,10 +48,26 @@ public interface IArticleService<T extends Article> extends IMongoBaseService<T,
     T findByNameIgnoreCase(final String name);
 
     /**
+     * Get list of article entities by name pattern
+     *
+     * @param name - article name pattern
+     * @return list of article entities
+     */
+    List<? extends T> findByNameLike(final String name);
+
+    /**
      * Get list of article entities by category
      *
      * @param category - article category
      * @return list of article entities
      */
     List<? extends T> findByCategory(final String category);
+
+    /**
+     * Get list of article entities by category ID
+     *
+     * @param categoryId - category identifier
+     * @return list of article entities
+     */
+    List<? extends T> findByCategoryId(final Long categoryId);
 }

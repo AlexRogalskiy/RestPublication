@@ -44,20 +44,20 @@ import javax.persistence.InheritanceType;
 //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "userOrders"})
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @JacksonXmlRootElement(localName = "article")
-public class ArticleDTO extends BaseDTO<Long> {
+public class ArticleDTO extends BaseDTO<String> {
 
     @JacksonXmlProperty(localName = "id")
-    private Long id;
+    private String id;
     @JacksonXmlProperty(localName = "name")
     private String name;
     @JacksonXmlProperty(localName = "category")
     private String category;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(final Long id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -98,6 +98,6 @@ public class ArticleDTO extends BaseDTO<Long> {
 
     @Override
     public String toString() {
-        return String.format("ArticleDTO {id: %d, name: %s, category: %s, inherited: %s}", this.id, this.name, this.category, super.toString());
+        return String.format("ArticleDTO {id: %s, name: %s, category: %s, inherited: %s}", this.id, this.name, this.category, super.toString());
     }
 }
