@@ -27,6 +27,7 @@ import com.wildbeeslabs.api.rest.common.service.interfaces.IBaseService;
 import com.wildbeeslabs.rest.publication.model.Article;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  *
@@ -45,7 +46,7 @@ public interface IArticleService<T extends Article> extends IBaseService<T, Stri
      * @param name - article name
      * @return article entity
      */
-    T findByNameIgnoreCase(final String name);
+    Optional<T> findByNameIgnoreCase(final String name);
 
     /**
      * Get list of article entities by name pattern
@@ -63,11 +64,11 @@ public interface IArticleService<T extends Article> extends IBaseService<T, Stri
      */
     List<? extends T> findByCategory(final String category);
 
-    /**
-     * Get list of article entities by category ID
-     *
-     * @param categoryId - category identifier
-     * @return list of article entities
-     */
-    List<? extends T> findByCategoryId(final Long categoryId);
+//    /**
+//     * Get list of article entities by category ID
+//     *
+//     * @param categoryId - category identifier
+//     * @return list of article entities
+//     */
+//    List<? extends T> findByCategoryId(final Long categoryId);
 }

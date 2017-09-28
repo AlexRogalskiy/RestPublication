@@ -26,8 +26,13 @@ package com.wildbeeslabs.rest.publication.service;
 import com.wildbeeslabs.rest.publication.model.Article;
 import com.wildbeeslabs.rest.publication.repository.ArticleRepository;
 import com.wildbeeslabs.rest.publication.service.interfaces.IArticleService;
+import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,23 +51,56 @@ import org.springframework.transaction.annotation.Transactional;
 public class ArticleServiceImpl<T extends Article> extends MongoBaseServiceImpl<T, String, ArticleRepository<T>> implements IArticleService<T> {
 
     @Override
-    public T findByNameIgnoreCase(final String name) {
-        return getRepository().findByNameIgnoreCase(name);
+    public Optional<T> findByNameIgnoreCase(final String name) {
+        final CompletableFuture<Optional<T>> futureItem = getRepository().findByNameIgnoreCase(name);//.thenApply(this::doSomethingWithArticles);
+        Optional<T> item = Optional.empty();
+        try {
+            while (!futureItem.isDone()) {
+                //LOGGER.info("Waiting for the CompletableFuture < findByNameIgnoreCase > to finish...");
+                TimeUnit.MILLISECONDS.sleep(500);
+            }
+            item = futureItem.get();
+        } catch (InterruptedException | ExecutionException ex) {
+            //LOGGER.error("ERROR: execution cannot be performed for the CompletableFuture < findByNameIgnoreCase > with message {}", ex);
+        }
+        return item;
     }
 
     @Override
     public List<? extends T> findByCategory(final String category) {
-        return getRepository().findByCategory(category);
+        final CompletableFuture<List<? extends T>> futureItem = getRepository().findByCategory(category);
+        List<? extends T> items = new ArrayList();
+        try {
+            while (!futureItem.isDone()) {
+                //LOGGER.info("Waiting for the CompletableFuture < findByCategory > to finish...");
+                TimeUnit.MILLISECONDS.sleep(500);
+            }
+            items = futureItem.get();
+        } catch (InterruptedException | ExecutionException ex) {
+            //LOGGER.error("ERROR: execution cannot be performed for the CompletableFuture < findByCategory > with message {}", ex);
+        }
+        return items;
     }
 
     @Override
-    public List<? extends T> findByNameLike(final String name) {
-        return getRepository().findByNameLike(name);
+    public List<? extends T> findByNameLike(final String namePattern) {
+        final CompletableFuture<List<? extends T>> futureItem = getRepository().findByNameLike(namePattern);
+        List<? extends T> items = new ArrayList();
+        try {
+            while (!futureItem.isDone()) {
+                //LOGGER.info("Waiting for the CompletableFuture < findEntityByNameIgnoreCase > to finish...");
+                TimeUnit.MILLISECONDS.sleep(500);
+            }
+            items = futureItem.get();
+        } catch (InterruptedException | ExecutionException ex) {
+            //LOGGER.error("ERROR: execution cannot be performed for the CompletableFuture < findEntityByNameIgnoreCase > with message {}", ex);
+        }
+        return items;
     }
 
-    @Override
-    public List<? extends T> findByCategoryId(final Long categoryId) {
-        //return getRepository().findByCategoryId(categoryId);
-        return null;
-    }
+//    @Override
+//    public List<? extends T> findByCategoryId(final Long categoryId) {
+//        //return getRepository().findByCategoryId(categoryId);
+//        return null;
+//    }
 }

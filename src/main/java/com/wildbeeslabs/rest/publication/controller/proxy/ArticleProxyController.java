@@ -34,6 +34,7 @@ import com.wildbeeslabs.rest.publication.service.interfaces.IArticleService;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 
@@ -57,27 +58,26 @@ public class ArticleProxyController<T extends Article, E extends ArticleDTO> ext
 
     public T findEntityByNameIgnoreCase(final String name) {
         LOGGER.info("Fetching article by name {}", name);
-        final T item = getService().findByNameIgnoreCase(name);
-        if (Objects.isNull(item)) {
+        final Optional<T> item = getService().findByNameIgnoreCase(name);
+        if (!item.isPresent()) {
             throw new ResourceNotFoundException(getResource().formatMessage("error.no.article.item.by.name", name));
         }
-        return item;
+        return item.get();
     }
 
-    public IBaseDTOListWrapper<? extends E> findByCategoryId(final Long categoryId) throws EmptyContentException {
-        final List<? extends T> items = this.findEntityByCategoryId(categoryId);
-        return getDTOConverter().convertToDTOAndWrap(items, getDtoClass(), getDtoListClass());
-    }
-
-    public List<? extends T> findEntityByCategoryId(final Long categoryId) throws EmptyContentException {
-        LOGGER.info("Fetching all articles by category id {}", categoryId);
-        final List<? extends T> items = getService().findByCategoryId(categoryId);
-        if (items.isEmpty()) {
-            throw new EmptyContentException(getResource().formatMessage("error.no.content"));
-        }
-        return items;
-    }
-
+//    public IBaseDTOListWrapper<? extends E> findByCategoryId(final Long categoryId) throws EmptyContentException {
+//        final List<? extends T> items = this.findEntityByCategoryId(categoryId);
+//        return getDTOConverter().convertToDTOAndWrap(items, getDtoClass(), getDtoListClass());
+//    }
+//
+//    public List<? extends T> findEntityByCategoryId(final Long categoryId) throws EmptyContentException {
+//        LOGGER.info("Fetching all articles by category id {}", categoryId);
+//        final List<? extends T> items = getService().findByCategoryId(categoryId);
+//        if (items.isEmpty()) {
+//            throw new EmptyContentException(getResource().formatMessage("error.no.content"));
+//        }
+//        return items;
+//    }
     public IBaseDTOListWrapper<? extends E> findByCategory(final String category) throws EmptyContentException {
         final List<? extends T> items = this.findEntityByCategory(category);
         return getDTOConverter().convertToDTOAndWrap(items, getDtoClass(), getDtoListClass());
@@ -107,7 +107,7 @@ public class ArticleProxyController<T extends Article, E extends ArticleDTO> ext
     }
 
     /**
-     * Get default entity class instance
+     * Get default entity class
      *
      * @return entity class instance
      */
@@ -117,9 +117,9 @@ public class ArticleProxyController<T extends Article, E extends ArticleDTO> ext
     }
 
     /**
-     * Get default DTO class instance
+     * Get default DTO entity class
      *
-     * @return entity class instance
+     * @return DTO entity class instance
      */
     @Override
     protected Class<? extends E> getDtoClass() {
@@ -127,9 +127,9 @@ public class ArticleProxyController<T extends Article, E extends ArticleDTO> ext
     }
 
     /**
-     * Get default DTO Wrapper List class
+     * Get default DTO Wrapper entity class
      *
-     * @return entity class instance
+     * @return DTO wrapper entity class instance
      */
     @Override
     protected Class<? extends IBaseDTOListWrapper> getDtoListClass() {

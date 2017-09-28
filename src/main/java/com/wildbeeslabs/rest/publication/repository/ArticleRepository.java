@@ -25,7 +25,12 @@ package com.wildbeeslabs.rest.publication.repository;
 
 import com.wildbeeslabs.api.rest.common.repository.BaseRepository;
 import com.wildbeeslabs.rest.publication.model.Article;
+
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -46,7 +51,8 @@ public interface ArticleRepository<T extends Article> extends MongoBaseRepositor
      * @param name - article name
      * @return article entity
      */
-    T findByNameIgnoreCase(final String name);
+    @Async
+    CompletableFuture<Optional<T>> findByNameIgnoreCase(final String name);
 
     /**
      * Get list of article entities by name pattern
@@ -54,7 +60,8 @@ public interface ArticleRepository<T extends Article> extends MongoBaseRepositor
      * @param name - article name pattern
      * @return list of article entities
      */
-    List<? extends T> findByNameLike(final String name);
+    @Async
+    CompletableFuture<List<? extends T>> findByNameLike(final String name);
 
     /**
      * Get list of article entities by category
@@ -62,5 +69,6 @@ public interface ArticleRepository<T extends Article> extends MongoBaseRepositor
      * @param category - article category
      * @return list of article entities
      */
-    List<? extends T> findByCategory(final String category);
+    @Async
+    CompletableFuture<List<? extends T>> findByCategory(final String category);
 }

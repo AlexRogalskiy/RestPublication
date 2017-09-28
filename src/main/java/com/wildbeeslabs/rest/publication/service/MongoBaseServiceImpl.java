@@ -29,6 +29,7 @@ import com.wildbeeslabs.rest.publication.repository.MongoBaseRepository;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -58,7 +59,7 @@ public abstract class MongoBaseServiceImpl<T extends IBaseEntity, ID extends Ser
     }
 
     @Override
-    public T findById(final ID id) {
+    public Optional<T> findById(final ID id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
